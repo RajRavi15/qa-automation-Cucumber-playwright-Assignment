@@ -1,0 +1,40 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Test Artifacts
+/screenshots/
+/videos/
+/hars/
+/allure-results/
+/allure-report/
+
+# Reports
+cucumber-report.html
+cucumber-report.json
+cucumber-report-*.html
+test-results.xml
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+*.log

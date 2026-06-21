@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Registration Fixture</title>
+    <style>body{font-family:Arial;margin:20px} .hidden{display:none}</style>
+  </head>
+  <body>
+    <h1>Home</h1>
+    <a href="#" id="signup-link">Signup</a>
+
+    <div id="signup-form">
+      <h2>New User Signup!</h2>
+      <input placeholder="Name" id="signup-name" />
+      <input placeholder="Email" id="signup-email" />
+      <button id="signup-button">Signup</button>
+    </div>
+
+    <div id="account-info" class="hidden">
+      <h2>Enter Account Information</h2>
+      <input id="password" placeholder="Password" />
+      <input id="first_name" placeholder="First Name" />
+      <input id="last_name" placeholder="Last Name" />
+      <input id="address1" placeholder="Address" />
+      <input id="state" placeholder="State" />
+      <input id="city" placeholder="City" />
+      <input id="zipcode" placeholder="Zipcode" />
+      <input id="mobile_number" placeholder="Mobile" />
+      <button id="create-account">Create Account</button>
+    </div>
+
+    <div id="success" class="hidden">
+      <h2>Account Created!</h2>
+      <a href="#" id="continue-link">Continue</a>
+    </div>
+
+    <script>
+      const signupLink = document.getElementById('signup-link');
+      const signupForm = document.getElementById('signup-form');
+      const signupButton = document.getElementById('signup-button');
+      const accountInfo = document.getElementById('account-info');
+      const createAccount = document.getElementById('create-account');
+      const success = document.getElementById('success');
+
+      signupLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        signupForm.classList.remove('hidden');
+      });
+
+      signupButton.addEventListener('click', () => {
+        signupForm.classList.add('hidden');
+        accountInfo.classList.remove('hidden');
+      });
+
+      createAccount.addEventListener('click', () => {
+        accountInfo.classList.add('hidden');
+        success.classList.remove('hidden');
+      });
+    </script>
+  </body>
+</html>

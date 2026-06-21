@@ -1,0 +1,31 @@
+{
+  "default": {
+    "require": ["src/steps/**/*.ts", "src/hooks/**/*.ts"],
+    "require-module": ["ts-node/register"],
+    "format": [
+      "progress-bar",
+      "html:cucumber-report.html",
+      "json:cucumber-report.json",
+      "junit:test-results.xml"
+    ],
+    "formatOptions": {
+      "snippetInterface": "async-await"
+    }
+  },
+  "ui": {
+    "tags": "@ui",
+    "format": ["progress-bar", "html:cucumber-report-ui.html"]
+  },
+  "api": {
+    "tags": "@api",
+    "format": ["progress-bar", "html:cucumber-report-api.html"]
+  },
+  "smoke": {
+    "tags": "@smoke",
+    "format": ["progress-bar", "html:cucumber-report-smoke.html"]
+  },
+  "regression": {
+    "tags": "@regression",
+    "format": ["progress-bar", "html:cucumber-report-regression.html"]
+  }
+}
