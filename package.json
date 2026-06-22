@@ -4,24 +4,26 @@
   "description": "Production-ready Playwright BDD automation framework",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf dist test-results allure-results allure-report",
-    "build": "tsc",
-    "lint": "eslint . --ext .ts",
-    "format": "prettier --write .",
-    "cucumber": "cucumber-js src/features --require-module ts-node/register --require src/support/**/*.ts --require src/steps/**/*.ts --require src/hooks/**/*.ts",
-    "test:ui": "npm run test -- --tags @ui",
-    "test:api": "npm run test -- --tags @api",
-    "test:smoke": "npm run test -- --tags @smoke",
-    "test:regression": "npm run test -- --tags @regression",
-    "report": "allure generate allure-results --clean -o allure-report",
-    "test": "npm run clean && cucumber-js src/features --require-module ts-node/register --require src/support/**/*.ts --require src/steps/**/*.ts --require src/hooks/**/*.ts --format progress-bar --format summary",
-    "test:allure": "rimraf allure-results && cucumber-js src/features --require-module ts-node/register --require src/support/**/*.ts --require src/steps/**/*.ts --require src/hooks/**/*.ts --format progress --format allure-cucumberjs/reporter",
-    "test:run": "cucumber-js src/features --require-module ts-node/register --require src/support/**/*.ts --require src/steps/**/*.ts --require src/hooks/**/*.ts --format progress --format summary",
-    "test:parallel": "npm run clean && cucumber-js src/features --parallel 2 --require-module ts-node/register --require src/support/**/*.ts --require src/steps/**/*.ts --require src/hooks/**/*.ts",
-    "type-check": "tsc --noEmit",
-    "report:allure": "allure generate allure-results --clean -o allure-report",
-    "report:open": "allure open allure-report",
-    "test:ci": "cucumber-js src/features --require-module ts-node/register --require src/support/**/*.ts --require src/steps/**/*.ts --require src/hooks/**/*.ts --format progress"
+  "clean": "rimraf dist test-results allure-results allure-report",
+
+  "build": "tsc",
+  "lint": "eslint . --ext .ts",
+  "format": "prettier --write .",
+
+  "test": "npm run clean && cucumber-js src/features --require-module ts-node/register --require src/support/**/*.ts --require src/steps/**/*.ts --require src/hooks/**/*.ts --format progress --format summary --format allure-cucumberjs/reporter",
+  "test:smoke": "npm run test -- --tags @smoke",
+  "test:regression": "npm run test -- --tags @regression",
+  "test:ui": "npm run test -- --tags @ui",
+  "test:api": "npm run test -- --tags @api",
+
+  "test:parallel": "npm run clean && cucumber-js src/features --parallel 2 --require-module ts-node/register --require src/support/**/*.ts --require src/steps/**/*.ts --require src/hooks/**/*.ts --format progress --format summary --format allure-cucumberjs/reporter",
+
+  "type-check": "tsc --noEmit",
+
+  "report:allure": "allure generate allure-results --clean -o allure-report",
+  "report:open": "allure open allure-report",
+
+  "test:ci": "npm run test"
     
   },
   "keywords": [

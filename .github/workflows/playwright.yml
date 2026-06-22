@@ -11,31 +11,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # Node setup
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
 
+      # Install deps
       - name: Install Dependencies
         run: npm ci
 
+      # Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Smoke Tests
-        run: npm run test:smoke
+      # Run tests (single clean command)
+      - name: Run Tests
+        run: npm test
 
-      - name: Run Regression Tests
-        run: npm run test:regression
-
+      # Generate Allure report ONLY if results exist
       - name: Generate Allure Report
-        run: npm run report:allure
+        if: always()
+        run: |
+          if [ -d "allure-results" ] && [ "$(ls -A allure-results)" ]; then
+            npm run report:allure
+          else
+            echo "No Allure results found"
+          fi
 
+      # Upload Allure report
       - name: Upload Allure Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
+
+      # Upload raw results (debugging)
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results
