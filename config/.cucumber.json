@@ -3,29 +3,27 @@
     "require": ["src/steps/**/*.ts", "src/hooks/**/*.ts"],
     "require-module": ["ts-node/register"],
     "format": [
-      "progress-bar",
-      "html:cucumber-report.html",
-      "json:cucumber-report.json",
-      "junit:test-results.xml"
+      "progress",
+      "summary",
+      "allure-cucumberjs/reporter",
+      "json:reports/cucumber-report.json",
+      "junit:reports/test-results.xml"
     ],
     "formatOptions": {
       "snippetInterface": "async-await"
     }
   },
+
   "ui": {
-    "tags": "@ui",
-    "format": ["progress-bar", "html:cucumber-report-ui.html"]
+    "tags": "@ui"
   },
   "api": {
-    "tags": "@api",
-    "format": ["progress-bar", "html:cucumber-report-api.html"]
+    "tags": "@api"
   },
   "smoke": {
-    "tags": "@smoke",
-    "format": ["progress-bar", "html:cucumber-report-smoke.html"]
+    "tags": "@smoke"
   },
   "regression": {
-    "tags": "@regression",
-    "format": ["progress-bar", "html:cucumber-report-regression.html"]
+    "tags": "@regression"
   }
 }
