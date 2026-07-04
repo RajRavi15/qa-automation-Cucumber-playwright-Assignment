@@ -12,8 +12,11 @@ setDefaultTimeout(90 * 1000);
 let browser: Browser;
 
 BeforeAll(async function () {
+  const isHeadless = process.env.HEADLESS === 'true' || process.env.CI === 'true' || process.env.CI === '1';
+
   browser = await chromium.launch({
-   headless: process.env.HEADLESS === 'false',
+    headless: isHeadless,
+    args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] : undefined,
   });
 });
 

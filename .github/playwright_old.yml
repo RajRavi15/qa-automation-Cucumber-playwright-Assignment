@@ -1,0 +1,78 @@
+name: QA Automation Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Setup Node
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      # 3. Install dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4. Install Playwright browsers
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      # 5. Run tests (HEADLESS FIX)
+      - name: Run Tests
+        run: npm run test
+        env:
+          HEADLESS: true
+          RECORD_VIDEO: false
+          RECORD_HAR: false
+
+      # 6. Debug (important)
+      - name: Debug Files
+        if: always()
+        run: |
+          echo "Listing project files"
+          ls -la
+          echo "Checking allure-results"
+          ls -la allure-results || echo "No allure-results folder"
+
+      # 7. Generate Allure report
+      - name: Generate Allure Report
+        if: always()
+        run: |
+          if [ -d "allure-results" ] && [ "$(ls -A allure-results)" ]; then
+            npm run report:allure
+          else
+            echo "No Allure results found"
+          fi
+
+      # 8. Upload report
+      - name: Upload Allure Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+          if-no-files-found: ignore
+
+      # 9. Upload raw results
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            test-results
+            allure-results
+          if-no-files-found: ignore
