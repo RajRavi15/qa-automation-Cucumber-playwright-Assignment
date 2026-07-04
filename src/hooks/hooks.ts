@@ -13,7 +13,7 @@ let browser: Browser;
 
 BeforeAll(async function () {
   browser = await chromium.launch({
-    headless: process.env.HEADLESS !=='true',
+   headless: process.env.HEADLESS === 'false',
   });
 });
 

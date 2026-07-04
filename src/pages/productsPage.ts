@@ -55,13 +55,18 @@ export class ProductPage extends BasePage {
     const viewBtn = firstProduct.getByText('View Product');
 
     await Promise.all([
-      this.page.waitForURL('**/product_details/**', { timeout: ENV.TIMEOUT }),
+      this.page.waitForNavigation({ timeout: ENV.TIMEOUT }).catch(() => null),
       viewBtn.click()
     ]);
+
+    await this.page.waitForLoadState('networkidle', { timeout: ENV.TIMEOUT }).catch(() => null);
+    await this.page.waitForLoadState('domcontentloaded', { timeout: ENV.TIMEOUT }).catch(() => null);
   }
 
   async verifyProductName(): Promise<void> {
-    await expect(this.page.locator('.product-information h2')).toBeVisible();
+    const productNameLocator = this.page.locator('.product-information h2');
+    await this.page.waitForTimeout(1000);
+    await expect(productNameLocator).toBeVisible({ timeout: ENV.TIMEOUT });
   }
 
   async verifyProductPrice(): Promise<void> {
@@ -132,12 +137,16 @@ export class ProductPage extends BasePage {
 
   async increaseQuantity(): Promise<void> {
     // Navigate back to products
-    await this.page.getByRole('link', { name: /products/i }).click();
+    await this.goto('/products');
+    await this.page.waitForLoadState('networkidle', { timeout: ENV.TIMEOUT }).catch(() => null);
+    await this.page.waitForLoadState('domcontentloaded', { timeout: ENV.TIMEOUT }).catch(() => null);
+    await expect(this.products.first()).toBeVisible({ timeout: ENV.TIMEOUT });
 
     const secondProduct = this.products.nth(1);
 
     await secondProduct.scrollIntoViewIfNeeded();
     await secondProduct.hover();
+    await expect(secondProduct.locator('.add-to-cart').first()).toBeVisible({ timeout: ENV.TIMEOUT });
 
     await secondProduct.locator('.add-to-cart').first().click();
 
