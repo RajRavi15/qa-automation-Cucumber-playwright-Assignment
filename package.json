@@ -47,6 +47,7 @@
   },
   "overrides": {
     "commander": "10.0.1",
-    "indent-string": "4.0.0"
+    "indent-string": "4.0.0",
+    "figures": "5.0.0"
   }
 }
