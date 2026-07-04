@@ -46,6 +46,7 @@
     "dotenv": "^17.4.2"
   },
   "overrides": {
-    "commander": "10.0.1"
+    "commander": "10.0.1",
+    "indent-string": "4.0.0"
   }
 }
