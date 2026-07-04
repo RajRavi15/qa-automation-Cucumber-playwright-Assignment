@@ -32,7 +32,7 @@ jobs:
 
       # 5. Run tests (HEADLESS FIX)
       - name: Run Tests
-        run: npm test
+        run: npm run test
         env:
           HEADLESS: true
           RECORD_VIDEO: false
